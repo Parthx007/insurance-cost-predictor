@@ -1,34 +1,67 @@
+
 import streamlit as st
 import pandas as pd
 import joblib
 
-# Load model and scaler
+# ----------------------------
+# Page Configuration
+# ----------------------------
+st.set_page_config(
+    page_title="Insurance Cost Predictor",
+    page_icon="🏥",
+    layout="centered"
+)
+
+# ----------------------------
+# Load Model and Scaler
+# ----------------------------
 model = joblib.load("insurance_model.pkl")
 scaler = joblib.load("scaler.pkl")
 
-st.title("Insurance Cost Prediction")
+# ----------------------------
+# Title
+# ----------------------------
+st.title("🏥 Insurance Cost Predictor")
+st.markdown(
+    """
+    Predict your estimated medical insurance charges using Machine Learning.
+    """
+)
 
+st.divider()
+
+# ----------------------------
 # User Inputs
-age = st.number_input("Age", min_value=18, max_value=100, value=25)
+# ----------------------------
+col1, col2 = st.columns(2)
 
-sex = st.selectbox(
-    "Gender",
-    ["Male", "Female"]
-)
+with col1:
+    age = st.number_input(
+        "Age",
+        min_value=18,
+        max_value=100,
+        value=25
+    )
 
-bmi = st.number_input(
-    "BMI",
-    min_value=10.0,
-    max_value=60.0,
-    value=25.0
-)
+    bmi = st.number_input(
+        "BMI",
+        min_value=10.0,
+        max_value=60.0,
+        value=25.0
+    )
 
-children = st.number_input(
-    "Children",
-    min_value=0,
-    max_value=10,
-    value=0
-)
+with col2:
+    children = st.number_input(
+        "Children",
+        min_value=0,
+        max_value=10,
+        value=0
+    )
+
+    sex = st.selectbox(
+        "Gender",
+        ["Male", "Female"]
+    )
 
 smoker = st.selectbox(
     "Smoker",
@@ -40,7 +73,12 @@ region = st.selectbox(
     ["northeast", "northwest", "southeast", "southwest"]
 )
 
-if st.button("Predict"):
+st.divider()
+
+# ----------------------------
+# Prediction
+# ----------------------------
+if st.button("Predict Insurance Cost"):
 
     is_female = 1 if sex == "Female" else 0
     is_smoker = 1 if smoker == "Yes" else 0
@@ -80,6 +118,15 @@ if st.button("Predict"):
 
     prediction = model.predict(input_df)
 
-    st.success(
-        f"Estimated Insurance Cost: ₹{prediction[0]:,.2f}"
+    st.success("Prediction Generated Successfully!")
+
+    st.metric(
+        label="Estimated Insurance Cost",
+        value=f"₹{prediction[0]:,.2f}"
     )
+
+st.divider()
+
+st.caption(
+    "Built with Python, Scikit-Learn and Streamlit"
+)
