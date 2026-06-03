@@ -133,13 +133,11 @@ insurance-cost-predictor/
 
 ![Prediction Result](prediction.png.png)
 
-## Project Demonstration
+## Project Demo
 
-A PDF demonstration of the application is included in the repository:
+📄 **View Complete Project Demonstration PDF**
 
-```text
-project_demo.pdf
-```
+[Open Demo PDF](./project_demo.pdf)
 
 ---
 
